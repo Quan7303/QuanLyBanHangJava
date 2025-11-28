@@ -5,10 +5,7 @@
  */
 package QLBH.Model;
 
-/**
- *
- * @author THUY TRUC
- */
+
 public class LoaiSP {
     // thuoc tinh
     public String MaloaiSP, TenloaiSP, GhiChu;

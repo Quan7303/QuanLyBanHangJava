@@ -5,10 +5,7 @@
  */
 package QLBH.Model;
 
-/**
- *
- * @author THUY TRUC
- */
+
 public class KhachHang {
     // thuoc tinh
     public String MaKH, TenKH, DiaChi, NgaySinh, DienThoai;

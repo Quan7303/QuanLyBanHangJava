@@ -7,7 +7,7 @@ package QLBH.Model;
 
 /**
  *
- * @author THUY TRUC
+ * @author Quan
  */
 public class CTHDon {
     // thuoc tinh

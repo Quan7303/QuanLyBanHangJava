@@ -5,10 +5,7 @@
  */
 package QLBH.Model;
 
-/**
- *
- * @author THUY TRUC
- */
+
 public class HDon {
     // thuoc tinh
     public String MaHD, MaKH, MaNV, NgayDH, NgayNH, PTTT;

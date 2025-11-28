@@ -5,10 +5,7 @@
  */
 package QLBH.Model;
 
-/**
- *
- * @author THUY TRUC
- */
+
 public class CTPNhap {
     // thuoc tinh
     public String SoPN, MaSP, TenSP;

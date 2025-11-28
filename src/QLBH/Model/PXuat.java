@@ -5,10 +5,7 @@
  */
 package QLBH.Model;
 
-/**
- *
- * @author THUY TRUC
- */
+
 public class PXuat {
     // thuoc tinh
     public String SoPX, NgayXuat, GhiChu, MaNV ;

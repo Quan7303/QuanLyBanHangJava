@@ -5,10 +5,7 @@
  */
 package QLBH.Model;
 
-/**
- *
- * @author THUY TRUC
- */
+
 public class PhongBan {
     // thuoc tinh
     public String MaPB, TenPB, GhiChu;
