@@ -13,7 +13,8 @@ import ketnoi.ketnoi;
 public class HoaDonForm extends JFrame {
     static ketnoi ketnoi = new ketnoi();
     // --- TextFields (THÔNG TIN HÓA ĐƠN) ---
-    private JTextField tfMaHD, tfMaKH, tfMaNV;
+    private JTextField tfMaHD;
+    private JComboBox<String> comboMaKH, comboMaNV;
     private JDateChooser tfNgayDH, tfNgayNH;
     private JComboBox<String> comboPTTT;
 
@@ -51,8 +52,12 @@ public class HoaDonForm extends JFrame {
 
         // --- WEST PANEL (THÔNG TIN HÓA ĐƠN) ---
         tfMaHD = new JTextField();
-        tfMaKH = new JTextField();
-        tfMaNV = new JTextField();
+
+        comboMaKH = new JComboBox<>();
+        comboMaNV = new JComboBox<>();
+        loadComboMaKH();
+        loadComboMaNV();
+
         tfNgayDH = new JDateChooser();
         tfNgayDH.setDateFormatString("yyyy-MM-dd");
         tfNgayNH = new JDateChooser();
@@ -67,9 +72,9 @@ public class HoaDonForm extends JFrame {
         westPanel.add(new JLabel("MÃ HD:", SwingConstants.CENTER));
         westPanel.add(tfMaHD);
         westPanel.add(new JLabel("MÃ KH:", SwingConstants.CENTER));
-        westPanel.add(tfMaKH);
+        westPanel.add(comboMaKH);
         westPanel.add(new JLabel("MÃ NV:", SwingConstants.CENTER));
-        westPanel.add(tfMaNV);
+        westPanel.add(comboMaNV);
         westPanel.add(new JLabel("NGÀY DH:", SwingConstants.CENTER));
         westPanel.add(tfNgayDH);
         westPanel.add(new JLabel("NGÀY NH:", SwingConstants.CENTER));
@@ -189,8 +194,8 @@ public class HoaDonForm extends JFrame {
             int row = table.getSelectedRow();
             if(row >= 0){
                 tfMaHD.setText(tableModel.getValueAt(row,0).toString());
-                tfMaKH.setText(tableModel.getValueAt(row,1).toString());
-                tfMaNV.setText(tableModel.getValueAt(row,2).toString());
+                comboMaKH.setSelectedItem(tableModel.getValueAt(row,1).toString());
+                comboMaNV.setSelectedItem(tableModel.getValueAt(row,2).toString());
                 tfNgayDH.setDate((java.util.Date)tableModel.getValueAt(row,3));
                 tfNgayNH.setDate((java.util.Date)tableModel.getValueAt(row,4));
                 comboPTTT.setSelectedItem(tableModel.getValueAt(row,5).toString());
@@ -240,8 +245,8 @@ public class HoaDonForm extends JFrame {
             PreparedStatement ps = conn.prepareStatement(sql)){
 
             ps.setString(1, tfMaHD.getText());
-            ps.setString(2, tfMaKH.getText());
-            ps.setString(3, tfMaNV.getText());
+            ps.setString(2, comboMaKH.getSelectedItem().toString());
+            ps.setString(3, comboMaNV.getSelectedItem().toString());
 
             java.sql.Date ngayDH = new java.sql.Date(tfNgayDH.getDate().getTime());
             java.sql.Date ngayNH = new java.sql.Date(tfNgayNH.getDate().getTime());
@@ -332,8 +337,8 @@ public class HoaDonForm extends JFrame {
         try(Connection conn = ketnoi.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
 
-            ps.setString(1, tfMaKH.getText());
-            ps.setString(2, tfMaNV.getText());
+            ps.setString(1, comboMaKH.getSelectedItem().toString());
+            ps.setString(2, comboMaNV.getSelectedItem().toString());
 
             java.sql.Date ngayDH = new java.sql.Date(tfNgayDH.getDate().getTime());
             java.sql.Date ngayNH = new java.sql.Date(tfNgayNH.getDate().getTime());
@@ -694,8 +699,11 @@ public class HoaDonForm extends JFrame {
 
     private void clearInfo(){
         this.tfMaHD.setText("");
-        this.tfMaKH.setText("");
-        this.tfMaNV.setText("");
+
+        comboMaKH.setSelectedIndex(-1);
+        comboMaNV.setSelectedIndex(-1);
+
+
         this.tfNgayDH.setDate(null);
         this.tfNgayNH.setDate(null);
     }
@@ -704,12 +712,12 @@ public class HoaDonForm extends JFrame {
         if(tfMaHD.getText().trim().isEmpty()){
             return "Mã hóa đơn không được để trống!";
         }
-        if(tfMaKH.getText().trim().isEmpty()){
-            return "Mã khách hàng không được để trống!";
-        }
-        if(tfMaNV.getText().trim().isEmpty()){
-            return "Mã nhân viên không được để trống!";
-        }
+//        if(tfMaKH.getText().trim().isEmpty()){
+//            return "Mã khách hàng không được để trống!";
+//        }
+//        if(tfMaNV.getText().trim().isEmpty()){
+//            return "Mã nhân viên không được để trống!";
+//        }
         if (tfNgayDH.getDate() == null)
             return "Ngày đặt hàng không hợp lệ hoặc chưa chọn!";
 
@@ -719,6 +727,40 @@ public class HoaDonForm extends JFrame {
         if (tfNgayNH.getDate().before(tfNgayDH.getDate()))
             return "Ngày nhận hàng không thể nhỏ hơn Ngày đặt hàng!";
         return null;
+    }
+
+    private void loadComboMaKH() {
+        String sql = "SELECT MaKH FROM khachhang";
+        try (Connection conn = ketnoi.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            comboMaKH.removeAllItems();
+            while (rs.next()) {
+                comboMaKH.addItem(rs.getString("MaKH"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi load danh sách khách hàng!");
+        }
+    }
+
+    private void loadComboMaNV() {
+        String sql = "SELECT MaNV FROM nhanvien";
+        try (Connection conn = ketnoi.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            comboMaNV.removeAllItems();
+            while (rs.next()) {
+                comboMaNV.addItem(rs.getString("MaNV"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi load danh sách nhân viên!");
+        }
     }
 
 
