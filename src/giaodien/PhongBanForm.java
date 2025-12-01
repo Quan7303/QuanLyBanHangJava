@@ -222,7 +222,6 @@ public class PhongBanForm extends JFrame {
                     return;
                 } else {
                     tblPB.setEnabled(false);
-                    textField1.setEnabled(true);
                     textField2.setEnabled(true);
                     textField3.setEnabled(true);
                     btnThem.setEnabled(false);

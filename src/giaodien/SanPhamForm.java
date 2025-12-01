@@ -260,7 +260,6 @@ public class SanPhamForm extends JFrame {
                     return;
                 } else {
                     tblSP.setEnabled(false);
-                    textField1.setEnabled(true);
                     textField2.setEnabled(true);
                     textField3.setEnabled(true);
                     textField4.setEnabled(true);

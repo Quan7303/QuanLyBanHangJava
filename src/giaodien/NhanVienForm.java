@@ -334,7 +334,6 @@ public class NhanVienForm extends JFrame {
                     return;
                 } else {
                     tblNV.setEnabled(false);
-                    textField1.setEnabled(true);
                     textField2.setEnabled(true);
                     textField9.setEnabled(true);
                     gioitinh.setEnabled(true);

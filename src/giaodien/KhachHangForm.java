@@ -240,7 +240,6 @@ public class KhachHangForm extends JFrame {
                     return;
                 } else {
                     tblKH.setEnabled(false);
-                    textField1.setEnabled(true);
                     textField2.setEnabled(true);
                     textField3.setEnabled(true);
                     dateChooserNgaySinh.setEnabled(true);

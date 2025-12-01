@@ -236,7 +236,6 @@ public class NhaCCForm extends JFrame {
                     return;
                 } else {
                     tblNCC.setEnabled(false);
-                    textField1.setEnabled(true);
                     textField2.setEnabled(true);
                     textField3.setEnabled(true);
                     textField4.setEnabled(true);

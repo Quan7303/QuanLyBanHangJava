@@ -217,7 +217,6 @@ public class LoaiSPForm extends JFrame {
                     return;
                 } else {
                     tblLSP.setEnabled(false);
-                    textField1.setEnabled(true);
                     textField2.setEnabled(true);
                     textField3.setEnabled(true);
                     btnThem.setEnabled(false);
